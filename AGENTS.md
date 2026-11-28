@@ -36,6 +36,9 @@ server/
   src/index.ts          Express app and routes
   src/auth.ts           requireUser middleware (checks the Bearer token)
   src/supabase.ts       supabaseForUser(token): acts as the user, so RLS applies
+  src/extract/schema.ts     Zod schemas: extraction fields (sent to Claude) and request body
+  src/extract/fetchPage.ts  Downloads a URL (SSRF guard, limits) and cleans HTML to text
+  src/extract/claude.ts     The Claude call (structured outputs) and the system prompt
 supabase/migrations/    SQL schema. Every DB change gets a new migration file here.
 mobile/                 (later) Flutter app
 ```
