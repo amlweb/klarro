@@ -9,7 +9,7 @@ if (!url || !key) {
 
 export const supabase = createClient(url, key, {
   auth: {
-    // PKCE: after Google/LinkedIn login, Supabase sends the user back with ?code=...
+    // PKCE: after Google login, Supabase sends the user back with ?code=...
     // supabase-js sees it on page load (detectSessionInUrl) and swaps it for a session.
     flowType: 'pkce',
     detectSessionInUrl: true,

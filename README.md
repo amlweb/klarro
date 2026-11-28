@@ -6,7 +6,7 @@ Paste a job ad (text or link) and get the key facts: location, work mode, contra
 |---|---|
 | `web/` | Desktop web app: React + Vite + Material UI + TypeScript |
 | `server/` | Node.js API (Express). Talks to Claude in step 2. |
-| `supabase/migrations/` | Database schema (already applied to the Supabase project "JobApp") |
+| `supabase/migrations/` | Database schema (already applied to the Supabase project "Klarro") |
 | `mobile/` | Later: Flutter app |
 
 ## Run it locally

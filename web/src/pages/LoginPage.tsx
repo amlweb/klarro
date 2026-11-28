@@ -1,7 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { Alert, Box, Button, Card, CardContent, Divider, Stack, Tab, Tabs, TextField, Typography } from '@mui/material'
 import GoogleIcon from '@mui/icons-material/Google'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import { supabase } from '../lib/supabase'
 import { clearOAuthErrorFromUrl, readOAuthErrorFromUrl, signInWithProvider, type OAuthProvider } from '../auth/oauth'
 
@@ -13,7 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [oauthBusy, setOauthBusy] = useState<OAuthProvider | null>(null)
-  // Shows the reason when Google/LinkedIn sent the user back with an error.
+  // Shows the reason when Google sent the user back with an error.
   const [error, setError] = useState<string | null>(readOAuthErrorFromUrl)
   const [info, setInfo] = useState<string | null>(null)
 
@@ -69,16 +68,6 @@ export default function LoginPage() {
               onClick={() => handleOAuth('google')}
             >
               Continue with Google
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              startIcon={<LinkedInIcon />}
-              loading={oauthBusy === 'linkedin_oidc'}
-              disabled={oauthBusy !== null || busy}
-              onClick={() => handleOAuth('linkedin_oidc')}
-            >
-              Continue with LinkedIn
             </Button>
           </Stack>
           <Divider sx={{ mb: 1 }}>or use email</Divider>

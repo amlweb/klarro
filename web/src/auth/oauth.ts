@@ -1,8 +1,8 @@
 import type { Provider } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 
-/** Providers shown on the login screen. LinkedIn uses Supabase's OpenID Connect provider. */
-export type OAuthProvider = Extract<Provider, 'google' | 'linkedin_oidc'>
+/** Providers shown on the login screen. */
+export type OAuthProvider = Extract<Provider, 'google'>
 
 /**
  * Sends the browser to the provider's login page.
