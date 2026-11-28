@@ -27,6 +27,17 @@ npm install
 npm run dev
 ```
 
+### Or start everything with one command
+
+From the root folder (after you create the `.env` files above):
+
+```bash
+npm run install:all   # first time only: installs root, web and server
+npm run dev           # starts web + server; Ctrl+C stops both
+```
+
+Use `npm run dev:web` or `npm run dev:server` to start only one app.
+
 ## How the pieces talk
 
 ```
