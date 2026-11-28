@@ -6,7 +6,7 @@ Paste a job ad (text or link) and get the key facts: location, work mode, contra
 |---|---|
 | `web/` | Desktop web app: React + Vite + Material UI + TypeScript |
 | `server/` | Node.js API (Express). Talks to Claude in step 2. |
-| `supabase/migrations/` | Database schema (already applied to the Supabase project "JobApp") |
+| `supabase/migrations/` | Database schema (already applied to the Supabase project "Klarro") |
 | `mobile/` | Later: Flutter app |
 
 ## Run it locally
@@ -26,6 +26,17 @@ cp .env.example .env         # then fill in the values
 npm install
 npm run dev
 ```
+
+### Or start everything with one command
+
+From the root folder (after you create the `.env` files above):
+
+```bash
+npm run install:all   # first time only: installs root, web and server
+npm run dev           # starts web + server; Ctrl+C stops both
+```
+
+Use `npm run dev:web` or `npm run dev:server` to start only one app.
 
 ## How the pieces talk
 

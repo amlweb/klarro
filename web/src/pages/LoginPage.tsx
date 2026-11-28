@@ -1,6 +1,8 @@
-import { useState, type FormEvent } from 'react'
-import { Alert, Box, Button, Card, CardContent, Stack, Tab, Tabs, TextField, Typography } from '@mui/material'
+import { useEffect, useState, type FormEvent } from 'react'
+import { Alert, Box, Button, Card, CardContent, Divider, Stack, Tab, Tabs, TextField, Typography } from '@mui/material'
+import GoogleIcon from '@mui/icons-material/Google'
 import { supabase } from '../lib/supabase'
+import { clearOAuthErrorFromUrl, readOAuthErrorFromUrl, signInWithProvider, type OAuthProvider } from '../auth/oauth'
 
 type Mode = 'signIn' | 'signUp'
 
@@ -9,8 +11,26 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [oauthBusy, setOauthBusy] = useState<OAuthProvider | null>(null)
+  // Shows the reason when Google sent the user back with an error.
+  const [error, setError] = useState<string | null>(readOAuthErrorFromUrl)
   const [info, setInfo] = useState<string | null>(null)
+
+  useEffect(() => {
+    clearOAuthErrorFromUrl()
+  }, [])
+
+  async function handleOAuth(provider: OAuthProvider) {
+    setOauthBusy(provider)
+    setError(null)
+    setInfo(null)
+    // On success the browser leaves this page, so we only handle the error case here.
+    const { error } = await signInWithProvider(provider)
+    if (error) {
+      setError(error.message)
+      setOauthBusy(null)
+    }
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -38,6 +58,19 @@ export default function LoginPage() {
           <Typography variant="h5" component="h1" gutterBottom>
             Klarro
           </Typography>
+          <Stack spacing={1.5} sx={{ mb: 2 }}>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<GoogleIcon />}
+              loading={oauthBusy === 'google'}
+              disabled={oauthBusy !== null || busy}
+              onClick={() => handleOAuth('google')}
+            >
+              Continue with Google
+            </Button>
+          </Stack>
+          <Divider sx={{ mb: 1 }}>or use email</Divider>
           <Tabs value={mode} onChange={(_, v: Mode) => setMode(v)} sx={{ mb: 2 }}>
             <Tab value="signIn" label="Sign in" />
             <Tab value="signUp" label="Create account" />
@@ -55,7 +88,7 @@ export default function LoginPage() {
             />
             {error && <Alert severity="error">{error}</Alert>}
             {info && <Alert severity="info">{info}</Alert>}
-            <Button type="submit" variant="contained" size="large" loading={busy}>
+            <Button type="submit" variant="contained" size="large" loading={busy} disabled={oauthBusy !== null}>
               {mode === 'signIn' ? 'Sign in' : 'Create account'}
             </Button>
           </Stack>

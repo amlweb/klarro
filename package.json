@@ -1,0 +1,13 @@
+{
+  "name": "klarro",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n web,server -c cyan,magenta --kill-others-on-fail \"npm:dev:web\" \"npm:dev:server\"",
+    "dev:web": "npm --prefix web run dev",
+    "dev:server": "npm --prefix server run dev",
+    "install:all": "npm install && npm --prefix web install && npm --prefix server install"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7"
+  }
+}

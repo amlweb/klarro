@@ -24,6 +24,7 @@ It is multi-user and starts as a desktop web app. A mobile app comes later.
 ## Folder layout
 
 ```
+package.json            Root scripts only: `npm run dev` starts all apps (concurrently)
 web/                    React app
   src/main.tsx          ThemeProvider + AuthProvider + App
   src/theme.ts          MUI theme (colours, shape). Style through the theme first.
@@ -45,6 +46,9 @@ mobile/                 (later) Flutter app
 cd web    && cp .env.example .env.local && npm install && npm run dev   # http://localhost:5173
 cd server && cp .env.example .env       && npm install && npm run dev   # http://localhost:3001/health
 ```
+
+Or from the root: `npm run install:all` once, then `npm run dev` starts web and server together
+(`concurrently`, see the root `package.json`). Add a `dev:<app>` script there for new apps.
 
 Checks before you finish a change:
 
